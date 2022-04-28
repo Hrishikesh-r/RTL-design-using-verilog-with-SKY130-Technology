@@ -55,6 +55,67 @@ The library file used is sky130_fd_sc_hd_tt_025C_1v80.lib.The nomenclature indic
 
 ![library-Insite](https://user-images.githubusercontent.com/91750776/165736698-79fd7d26-9dcf-42e4-b63f-b4aeb6422a18.jpg)
 
+The library contains different flavours of same logic gates. This is primarily done to meet the timing constraints.
+1. Faster cells increases the clock frequency
+-----T(clk) > T(cq_launch_flop) + T(combi) +T(setup_capture_flop)-----
+2. Slower cells are required to prevent hold violations
+-----T(hold_capture_flop) < T(cq_launch_flop) + T(combi)-----
+
+# Flat and Hierarchial Synthesis
+
+1. Hierarchial design has blocks, subblocks in an hierarchy; Flattened design has no subblocks and it has only leaf cells.
+2. Hierarchical design takes more run time; Flattened design takes less run time.
+
+Lets's consider the below example :
+![image](https://user-images.githubusercontent.com/91750776/165770904-980a5ea3-f283-4535-b025-1b206d601c42.png)
+
+
+
+if this logic is synthesised  hierarchically then, the netlist is as follows:
+
+![heir-1_netlist](https://user-images.githubusercontent.com/91750776/165771026-7754a3e2-9ba8-4f9f-a1ac-9ee0c0c186c6.jpg)
+![heir-2_netlist](https://user-images.githubusercontent.com/91750776/165771047-4aa6b2e1-2db4-40a5-9c50-9fff1dfeb940.jpg)
+
+![Herirarchial synthesis](https://user-images.githubusercontent.com/91750776/165774570-27cb6634-1787-4435-8eea-65535d2b9655.jpg)
+
+
+if this logic is synthesised  flat then, the netlist is as follows:
+
+![flat-1_netlist](https://user-images.githubusercontent.com/91750776/165771203-f7fc1d48-9557-405f-878a-5e79bbd1f7f6.jpg)
+![flat-2_netlist](https://user-images.githubusercontent.com/91750776/165771252-2dc505eb-61ce-4122-9301-71561324b190.jpg)
+
+![Flat synthseis](https://user-images.githubusercontent.com/91750776/165774642-726be570-d543-46c5-abf9-262a08958aac.jpg)
+
+Synthesis of Sudmodule1:
+
+![submodule-1 synthesis](https://user-images.githubusercontent.com/91750776/165774083-4b16b5db-75bc-4c2d-a002-ca989674211d.jpg)
+
+
+# Flip Flop Coding
+
+Flip-flop or latch is a circuit that has two stable states and can be used to store state information. The circuit can be made to change state by signals applied to one or more control inputs and will have one or two outputs. Asynchronous design requires very careful attention to signal delays to avoid producing glitches and other spurious signals.Glitches will produce false data and can produce very wrong results.The use of memory and a clock [Flip-Flop] can eliminate signal races and glitches.
+The set/reset logic is very important. They can be either synchronous or asynchronous. For flops with synchronous set/reset, the set/reset is dependant on clock and therefore this logic gets realised on the input (D- input).
+The flip-flop can be asynchronous or synchronous depending on the sensitivity list.
+1.  flipflop with asynchronous reset should have both clock and reset on the sensitiivity list.
+2.  A flipflop with synchronous reset  havs only clock on the sensitivity list.
+We need to use the command "dfflibmap -liberty ../path_to_library" in order to map to the FF available in the library.
+
+
+[1] D Flip-Flop with Asynchronous reset[ Simulation and Netlist]
+
+![asynres_dff](https://user-images.githubusercontent.com/91750776/165775162-14b984ac-6d26-41bd-b28c-087bae1a2581.jpg)
+![asyncres_netlist](https://user-images.githubusercontent.com/91750776/165775202-92c00efd-6e9a-46c4-bd87-5bea8ee99a4b.jpg)
+
+[2] D Flip-Flop with Asynchronous set[ Simulation and Netlist]
+
+![asynset_dff](https://user-images.githubusercontent.com/91750776/165775381-b310fb4b-4274-4270-9207-b9bb1de93cd4.jpg)
+![asyncset_netlist](https://user-images.githubusercontent.com/91750776/165775418-8e4229ae-4cc6-4eb3-8514-7b35acdfdeed.jpg)
+
+[3] D Flip-Flop with synchronous reset[ Simulation and Netlist]
+
+![synres_dff](https://user-images.githubusercontent.com/91750776/165775572-5f1daa2b-178e-4d84-b19d-daf03920f3ed.jpg)
+![synres_netlist](https://user-images.githubusercontent.com/91750776/165775623-6b008d7c-2756-4253-a071-063836aef740.jpg)
+
 
 
 
