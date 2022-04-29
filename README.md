@@ -3,7 +3,7 @@
 1. Iverilog(Icarus verilog)- A free compiler implementation for the IEEE-1364 Verilog hardware description language.
 2. GTKWave-It is a VCD waveform viewer based on the GTK library. This viewer support VCD and LXT formats for signal dumpswer based on the GTK library.
 3. Yosys - Yosys is an open-source synthesis tool. These are the open-source tools used in the labs for the workshop.
-4. SKY130 - Sky130 process node and pdk(process design kit) are an open-source packages provided by Google and skywater for 130nm technology.
+
 # Part-1
 First step is to import all files including the sky130 libraries, We have Imported using git clone as shown below:
 
@@ -115,6 +115,118 @@ We need to use the command "dfflibmap -liberty ../path_to_library" in order to m
 
 ![synres_dff](https://user-images.githubusercontent.com/91750776/165775572-5f1daa2b-178e-4d84-b19d-daf03920f3ed.jpg)
 ![synres_netlist](https://user-images.githubusercontent.com/91750776/165775623-6b008d7c-2756-4253-a071-063836aef740.jpg)
+
+
+# Part-3
+
+What is Optimization ?
+
+Optimization is the process of iterating through a design such that it meets timing, area and power specifications. 
+
+What are the types of Optimization in Combinational Circuits?
+
+1. Constant Propagation- Here, constant inputs to the logic are propagated to the output which results in a minimized expression implementing the same logic.
+2. Boolean logic optimization- This a techniques of minimizing large boolean expression using laws of boolean algebra.
+
+we  use the command "otp_clean -purge" to optimize the design and remove unwanted components after running synth command.
+
+![opt_clean_prge](https://user-images.githubusercontent.com/91750776/165957777-b7c85968-1a4e-451b-a892-7f0347b8ed8c.jpg)
+
+
+Below are the few examples of Combinational optimization with their Netlist:
+
+Example 1 :
+
+![opt_check_code](https://user-images.githubusercontent.com/91750776/165955579-9215f538-c124-40e7-9753-8558ce1ca04c.jpg)![opt_check_netlist](https://user-images.githubusercontent.com/91750776/165956364-a3a147e4-35f5-4200-b46b-f875c9add10c.jpg)
+
+Example 2 :
+
+![opt_check2_code](https://user-images.githubusercontent.com/91750776/165957135-4bef189e-5a69-4f47-911d-072bcc58a529.jpg)
+![opt_check2_netlist](https://user-images.githubusercontent.com/91750776/165957180-a302944b-e82d-4f05-9376-788d555881ab.jpg)
+
+Example 3 :
+
+![opt_check3_code](https://user-images.githubusercontent.com/91750776/165957598-6a1de0f9-db64-42d6-b1bf-08c090c192aa.jpg)
+![opt_check3_netlist](https://user-images.githubusercontent.com/91750776/165957634-0896f9d3-befd-44e7-bb82-d1ea88e42e6e.jpg)
+
+Example 4 :
+
+![opt_check4_ccode](https://user-images.githubusercontent.com/91750776/165957712-f9a63c6a-1822-4d50-a23f-8699ac4cee0c.jpg)
+![opt_check4_netlist](https://user-images.githubusercontent.com/91750776/165957738-9c8a74e5-1a51-49ea-94a2-b9f9d2053aa3.jpg)
+
+List the types of Sequential Optimizations.
+
+Sequential logic optimization can be divided into two
+
+1. Basic
+
+-> Sequential constant propagation
+
+2. Advanced
+
+-> State optimization
+
+-> Retiming
+
+-> Sequential logic cloning (floor plan aware synthesis)
+
+
+Below are the few examples of Sequential optimization with their Netlist, waveform :
+
+Example 1 :
+
+![dff_const1_code](https://user-images.githubusercontent.com/91750776/165960989-b65801d7-4f2e-4fd8-bf91-2464911f2251.jpg)
+![dff_const1_sim](https://user-images.githubusercontent.com/91750776/165961018-e1d71820-485b-438c-a010-ce606cff8724.jpg)
+![dff_const1_netlist](https://user-images.githubusercontent.com/91750776/165961044-c6f55f22-1100-41ca-8156-8a9f733a20f8.jpg)
+
+Example 2 :
+
+![dff_const2_code](https://user-images.githubusercontent.com/91750776/165961121-22e92a45-c304-41a6-ab70-a30f51da08a4.jpg)
+![dff_const2_sim](https://user-images.githubusercontent.com/91750776/165961146-5f7da0d7-6a62-4865-8173-66dac01292c2.jpg)
+![dff_const2_netlist since q was always one no flop were required](https://user-images.githubusercontent.com/91750776/165961185-6b4eb0a5-f8d1-4aab-be39-f4a012bbfe5a.jpg)
+
+Example 3 :
+
+![dff_const3_code](https://user-images.githubusercontent.com/91750776/165961250-0cd9f0db-ecf5-4197-92b9-eff497d08f96.jpg)
+![dff_const2_sim](https://user-images.githubusercontent.com/91750776/165961289-07fbf3e1-7f95-4181-a39b-0e8408ce6b20.jpg)
+![dff_const3_netlist](https://user-images.githubusercontent.com/91750776/165961319-986fadef-9ee4-42a1-a9e5-885713babeef.jpg)
+
+Example 4 :
+
+![dff_const4_code](https://user-images.githubusercontent.com/91750776/165961601-15d0a157-fe8f-4237-ba4e-e8b59963e690.jpg)
+![dff_const4_sim](https://user-images.githubusercontent.com/91750776/165961626-24dcfabc-0263-407f-8297-2cc0ccd66343.jpg)
+![dff_const4_netlist](https://user-images.githubusercontent.com/91750776/165961651-85bf40dd-ca93-4876-aed5-030a3574aa2c.jpg)
+
+Example 5 :
+
+![dff_const5_code](https://user-images.githubusercontent.com/91750776/165961712-4fe380f5-8225-4335-a79e-4a21fe778b02.jpg)
+![dff_const5_sim](https://user-images.githubusercontent.com/91750776/165961748-96806ae3-f098-4cfa-a4cc-3b82694aab01.jpg)
+![dff_const5_netlist](https://user-images.githubusercontent.com/91750776/165961803-92080bff-9c5d-4ae1-9f39-086a0e44cf0b.jpg)
+
+Example 6 :
+
+![multiple_module_code](https://user-images.githubusercontent.com/91750776/165961880-82e57b8f-1fa7-476b-b102-c66563d62d90.jpg)
+![multiple_modules_netlist](https://user-images.githubusercontent.com/91750776/165961912-fe3392c3-677a-4718-a20d-91fd522fafec.jpg)
+
+Example 7 :
+
+![image](https://user-images.githubusercontent.com/91750776/165962271-4498a1c6-cea8-4194-bd03-6583ca86c11c.png)
+![counter_opt_netlist](https://user-images.githubusercontent.com/91750776/165962282-59ab12bf-5ea7-4559-9747-f20b008bd40c.jpg)
+
+
+One can observe in example 2 and example 4 that none of the flip flops are invoked or used in the synthesis since, the required output is always high (1'b1) the tool has optimized as per the design. 
+
+In case of example 7, one can observe that only the LSB [q(0)] is taken as output. Consider the Stages of a 3-bit counter as shown below :
+ 
+ ![image](https://user-images.githubusercontent.com/91750776/165964931-8aa1474c-70c0-44e0-9f0e-d48a8dc0602b.png)
+
+Please observe that LSB is toggling/Inverting between the states and hence the synthesis tool invoked only one FF and an inverter from the library for the netlist.
+Hence optimization done for example 7.
+
+
+
+
+
 
 
 
