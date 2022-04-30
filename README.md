@@ -86,7 +86,7 @@ if this logic is synthesised  flat then, the netlist is as follows:
 
 ![Flat synthseis](https://user-images.githubusercontent.com/91750776/165774642-726be570-d543-46c5-abf9-262a08958aac.jpg)
 
-Synthesis of Sudmodule1:
+Synthesis of Submodule1:
 
 ![submodule-1 synthesis](https://user-images.githubusercontent.com/91750776/165774083-4b16b5db-75bc-4c2d-a002-ca989674211d.jpg)
 
