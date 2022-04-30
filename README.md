@@ -224,6 +224,96 @@ Please observe that LSB is toggling/Inverting between the states and hence the s
 Hence optimization done for example 7.
 
 
+# Part-4
+
+Gate Level Simualtion(GLS) :
+
+Gate level simulation is running the testbench against the output netlist after synthesis. Originally the RTL code was the design under test. Netlist should be logically same as the rtl code with the same set of inputs and outputs. So one can use the same testbench used for rtl simulation in gate level simulation as well.
+
+Why GLS ?
+
+1. Verify the logical correctness of design after synthesis.
+2. To ensure the timing of the design is met.
+3. For this GLS needs to be run with "delay annotation"
+
+GLS Using Iverilog :
+
+Refer the below diagram for approach :
+
+![image](https://user-images.githubusercontent.com/91750776/166099183-f93c16c3-683e-4b54-8e5d-e91195545b36.png)
+
+
+Synthesis Simulations Mismatches :
+
+1. Missing signals in sensitivity list :
+
+The sensitivity list is where you list all the signals that you want to cause the code in the process to be evaluated whenever it changes state. In sensitivity list if the appropriate parameters are not listed then the synthesis tool might develop the wrong logic.
+Consider the below examples : 
+
+Example 1 :
+
+In this example the multiplexer is implemented using conditional operator, hence one can observe that both the Code simulation and GLS are identical.
+One can distinguish between the code simulation and GLS by looking the UUT Instances in the simulator. In normal code simulation there will be only UUT under the test bench where as in case of GLS the UUT has further instances under it infered from the standard library cell. Refer the below images for more information.
+
+CODE:
+
+![ternary_mux_code](https://user-images.githubusercontent.com/91750776/166099878-a495aeea-c1b3-4026-9acc-ea315d29234d.jpg)
+
+RTL Simualtion :
+
+![ternatny_mux_xim](https://user-images.githubusercontent.com/91750776/166099893-6ecb3089-1d26-4053-b3bc-0b7738cab047.jpg)
+
+Synthesis netlist :
+
+![ternanry_mux_netlist](https://user-images.githubusercontent.com/91750776/166099903-95c83b8d-3f69-4018-aab3-d23e87a7f62f.jpg)
+
+GLS :
+
+![ternary_mux_gls_sim](https://user-images.githubusercontent.com/91750776/166099911-dd9c7a46-1241-410c-9434-b59e3b68f145.jpg)
+
+
+Example 2 :
+
+In this example one can observe that in the sensitivity list only the select line is included, the input lines are not included this will lead to wrong logic interpretation by the synthesis tool. Refer the Below images for more information.
+
+CODE :
+
+![bad_mux_code](https://user-images.githubusercontent.com/91750776/166100208-ccfca4e6-9b9d-4f3c-bb4d-5dbd95e7535e.jpg)
+
+RTL Simualtion :
+
+![bad_mux_sim](https://user-images.githubusercontent.com/91750776/166100224-4f0707ca-4f54-424e-82d9-e5416669d9ad.jpg)
+
+Synthesis netlist :
+
+![bad_mux_netlist](https://user-images.githubusercontent.com/91750776/166100241-9a7ad746-8b5a-4562-b36c-c3873c80e9a5.jpg)
+
+GLS :
+
+![bad_mux_gls](https://user-images.githubusercontent.com/91750776/166100263-e002bfcb-d6d5-4727-a88c-a365a725fc0a.jpg)
+
+2. Blocking and Nonblocking statements :
+
+Both blocking and nonblocking statements are procedural statements. The main difference between them is that blocking statements are evaluated in the order they are written while all non blocking statements execute concurrently (first RHS is calculated and then assigned to LHS). These difference can cause synthesis simulation mismatches due to the order in which the blocking statements are written. Consider the below example, in this case there is a delay by one clock cycle because the wire/reg X is used first and later its value is calculated and oddly blocking statments are used leading to synthesis simualtion mismatch.
+
+CODE:
+
+![Blocking_caveat_code](https://user-images.githubusercontent.com/91750776/166100492-9f6d1c02-0688-4ef2-958b-35a9f8d7b7a0.jpg)
+
+RTL Simualtion :
+
+![blocking_caveat_sim](https://user-images.githubusercontent.com/91750776/166100507-2c62eae8-deb2-4183-a6e2-307f88b6c113.jpg)
+
+Synthesis netlist :
+
+![blockin_netlist](https://user-images.githubusercontent.com/91750776/166100523-8764c3b7-be17-4971-b61e-87b6824d93b1.jpg)
+
+GLS:
+
+![blocking_caveat_glsi](https://user-images.githubusercontent.com/91750776/166100534-70310414-a852-43a6-8eda-e38c811b246f.jpg)
+
+
+# Part-5
 
 
 
