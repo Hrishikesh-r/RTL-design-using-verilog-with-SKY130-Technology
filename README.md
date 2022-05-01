@@ -1,3 +1,19 @@
+![image](https://user-images.githubusercontent.com/91750776/166153540-b4db9121-9da6-44c8-939d-999a75f047fa.png)
+
+
+# Contents 
+
+Part-1
+
+part-2
+
+part-3
+
+part-4
+
+part-5 
+
+
 # RTL-design-using-verilog-with-SKY130-Technology
 # Tools Used #
 1. Iverilog(Icarus verilog)- A free compiler implementation for the IEEE-1364 Verilog hardware description language.
@@ -119,6 +135,8 @@ We need to use the command "dfflibmap -liberty ../path_to_library" in order to m
 
 # Part-3
 
+# Optimization
+
 What is Optimization ?
 
 Optimization is the process of iterating through a design such that it meets timing, area and power specifications. 
@@ -226,7 +244,7 @@ Hence optimization done for example 7.
 
 # Part-4
 
-Gate Level Simualtion(GLS) :
+ # Gate Level Simualtion(GLS) :
 
 Gate level simulation is running the testbench against the output netlist after synthesis. Originally the RTL code was the design under test. Netlist should be logically same as the rtl code with the same set of inputs and outputs. So one can use the same testbench used for rtl simulation in gate level simulation as well.
 
@@ -314,6 +332,108 @@ GLS:
 
 
 # Part-5
+
+# IF, CASE, FOR LOOP & FOR GENERATE 
+
+IF Statements: 
+
+If statement can infer a mux or priority logic based on how its coded. Also if written badly, if statements can infer latches. Main reason for inferred latches is incomplete if statements. Let us consider the below example 1 :
+
+Example 1 :
+
+![incomp_if_code](https://user-images.githubusercontent.com/91750776/166153931-4f60524c-a8e9-4a11-b701-99fb37271c90.jpg)
+
+![incomp_if_sim](https://user-images.githubusercontent.com/91750776/166153935-e6ad7d05-ec6e-471a-9a28-d3f18a50ba4e.jpg)
+
+![synth_incomp_if](https://user-images.githubusercontent.com/91750776/166153943-16de228e-f278-432b-a025-5e917bb6d265.jpg)
+
+![incomp_if_synth](https://user-images.githubusercontent.com/91750776/166153953-5897acee-24c3-4435-acb6-4ec3bad1fa5e.jpg)
+
+One can observe here in the verilog code the else part of the if statement is missing, which leads to infer a latche as shown in the synthesis report and the netlist diagram. Hence it is advised to give else part mandatorily in the if statement. Let us see another example 2 as below :
+
+Example 2 : 
+
+![incomp_if2_code](https://user-images.githubusercontent.com/91750776/166154098-b36827b4-a9e4-4fab-8843-76d7e0ceb611.jpg)
+
+![incomp_if2_sim](https://user-images.githubusercontent.com/91750776/166154107-abd5eb34-d11d-4f3e-8c53-233984898ad8.jpg)
+
+![incomp_if2_netlist](https://user-images.githubusercontent.com/91750776/166154113-cecd93ef-d6cb-4202-8496-6fe2bac88648.jpg)
+
+Case Statements :
+
+The case statement compares an expression to a series of cases and executes the statement or statement group associated with the first matching case:
+
+ -> case statement supports single or multiple statements.
+ -> Group multiple statements using begin and end keywords.
+
+In case of case statements if the "default" part is missed then it might be that latch can be infered, as seen in the below example : 
+
+![incomp_case_code](https://user-images.githubusercontent.com/91750776/166154484-4207c160-004b-4e3d-83d5-d1c8a3df38aa.jpg)
+
+![incomp_case_sim](https://user-images.githubusercontent.com/91750776/166154493-47500e0a-3b40-4547-a201-d350cf635c3d.jpg)
+
+![incomp_case_synth](https://user-images.githubusercontent.com/91750776/166154503-07c27b0b-4cde-4ff7-af2f-f8c2a33d528c.jpg)
+
+![incomp_case_netlist](https://user-images.githubusercontent.com/91750776/166154516-ac2ea551-e976-44fe-bf4d-7cfd008a6b46.jpg)
+
+
+Consider example 3 in which default statement is used, one can easily find that latch is not being infered and appropriate result is obatined :
+
+Example 3 :
+
+![comp_case_code](https://user-images.githubusercontent.com/91750776/166154825-cf8fc5ee-3ae3-484d-bd9e-4b209285f08d.jpg)
+
+![comp_case_sim](https://user-images.githubusercontent.com/91750776/166154831-de81b8f4-46a7-4070-804f-f0693cc5e65c.jpg)
+
+![comp_case_synth](https://user-images.githubusercontent.com/91750776/166154844-57c35ebc-f60f-43f5-b6bd-2abbf5c89f60.jpg)
+
+
+For loop and For generate statements :
+
+For loop - Mainly used for evaluating expressions and can be used in always blocks.
+
+For generate - Used for Instantiating and should be used outside always blocks. 
+
+Consider example 4 ( demux using case statement) and example 5 (demux using for loop) below, one can easily see that both the results are same but by using for loop one can reduce the number of lines in the verilog code as well as synthesis effeciently.
+
+Example 4 :
+
+![demux_case_code](https://user-images.githubusercontent.com/91750776/166155093-888306a4-30a2-4425-a056-6ba882eaf1f5.jpg)
+
+![demux_case_sim](https://user-images.githubusercontent.com/91750776/166155104-9f327f2b-9c7d-4c23-8769-bc75f66fec5a.jpg)
+
+![demux_case_netlist](https://user-images.githubusercontent.com/91750776/166155111-7e53d4a5-6b76-464e-bc1d-c35af9e48303.jpg)
+
+
+Example 5 :
+
+![demux_generate_code](https://user-images.githubusercontent.com/91750776/166155123-dbb993f8-6ae8-4d8a-8674-29b9de175be6.jpg)
+
+![demux_generate_sim](https://user-images.githubusercontent.com/91750776/166155131-35a1271e-90eb-4ce6-bd40-3f51c5ba9209.jpg)
+
+![demux_generate_netlist](https://user-images.githubusercontent.com/91750776/166155138-e8fa0c96-f0a0-4682-99ea-131a88f57d00.jpg)
+
+
+Atlast we have implemented 8-bit ripple carry ahead adder using For-generate statments, by instantiating 1-bit full adder 8 times as shown in the below example 6.
+
+Example 6 :
+
+![rca_code](https://user-images.githubusercontent.com/91750776/166155348-f00749c2-b1c3-4ba5-bcd8-cb2fb11c4bbe.jpg)
+
+![rca_sim](https://user-images.githubusercontent.com/91750776/166155355-9b5a85b1-16e5-4136-95e4-264a2e7e4502.jpg)
+
+
+
+
+
+# Acknowledgements
+
+1. Kunal Gosh, Co-Founder (VSD Corp. Pvt Ltd)
+2. Shon Taware, Teaching Assistant (VSD Corp. Pvt Ltd)
+
+
+
+
 
 
 
