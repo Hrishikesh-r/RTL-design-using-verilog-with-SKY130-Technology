@@ -4,7 +4,7 @@
 # RTL-design-using-verilog-with-SKY130-Technology
 
 
-# Tools Used #
+# Tools Used 
 1. Iverilog(Icarus verilog)- A free compiler implementation for the IEEE-1364 Verilog hardware description language.
 2. GTKWave-It is a VCD waveform viewer based on the GTK library. This viewer support VCD and LXT formats for signal dumpswer based on the GTK library.
 3. Yosys - Yosys is an open-source synthesis tool. These are the open-source tools used in the labs for the workshop.
